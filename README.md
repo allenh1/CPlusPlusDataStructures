@@ -5,4 +5,11 @@ This repository is an effort to program useful data structures in C++. Yes, they
 
 LinkedList
 ----------
-The linked list is currently the only one I have programmed. Using the Node object, this structure links one node to the next by pointing to it. The only way to navigate this list is to go node-by-node through it until you reach a null pointer. This structure is useful because it allows one to efficiently remove/add a single index from/to the list in two assignments
+The linked list is currently the only one I have programmed. Using the Node object, this structure links one node to the next by pointing to it. The only way to navigate this list is to go node-by-node through it until you reach a null pointer. This structure is useful because it allows one to efficiently remove/add a single index from/to the list in two assignments.
+
+Compiling
+---------
+Each data structure has a `makefile.sh` file one uses to build. The code should build on any unix system with g++. Simply run
+`chmod +x makefile.sh`
+`./makefile.sh`
+To build the file.
