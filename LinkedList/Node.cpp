@@ -16,7 +16,7 @@ Node<T>::Node(const T& data, Node<T> * pParent, Node<T> * pNext)
 template<class T>
 Node<T> * Node<T>::getNode(const T& item, Node<T>* pNext)
 {
-	Node<T> * pLocal = new Node<T>(item, pNext);
+	Node<T> * pLocal = new Node<T>(item, NULL, pNext);
 	
 	if (pLocal == NULL)
 	{
