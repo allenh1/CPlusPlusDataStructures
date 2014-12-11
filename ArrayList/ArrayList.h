@@ -13,10 +13,13 @@ public:
 	
 	const int & size(){ return m_size; }
 	const T & get(int index){ return pElements[index]; }
-	inline T& operator [](int index){ return pElements[index]; }
+	const T remove(int index);
+	inline T & operator [](int index){ return pElements[index]; }
 
 	void print();
 	void add(const T& toPush);
+	void push_back(const T& toPush);
+	void push_front(const T& toPush);
 
 	bool isEmpty(){ return m_size == 0; }
 
