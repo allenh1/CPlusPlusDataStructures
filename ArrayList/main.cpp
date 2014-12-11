@@ -25,6 +25,7 @@ int main(int argc, char ** argv)
 	testCopy.add(-3, 1);
 	testCopy.add(-4, 2);
 	testCopy.print();
+	std::cout<<"Index of -3: "<<testCopy.indexOf(-3)<<std::endl;
 	
 	return 0;
 }

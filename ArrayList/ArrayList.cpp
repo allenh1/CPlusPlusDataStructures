@@ -114,3 +114,16 @@ bool ArrayList<T>::contains(const T& object)
 
 	return false;
 }
+
+template<class T>
+int ArrayList<T>::indexOf(const T& object)
+{
+	int index = -1;
+	for (int x = 0; x < m_size; ++x)
+	{
+		if (pElements[x] == object)
+			index = x;
+	}
+
+	return index;
+}

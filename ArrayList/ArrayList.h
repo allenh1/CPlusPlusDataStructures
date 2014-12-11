@@ -10,7 +10,7 @@ public:
 	ArrayList();
 	~ArrayList(){ delete[] pElements; }
 
-	
+	int indexOf(const T& other);
 	const int & size(){ return m_size; }
 	const T & get(int index){ return pElements[index]; }
 	const T remove(int index);
