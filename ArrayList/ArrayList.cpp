@@ -8,6 +8,13 @@ ArrayList<T>::ArrayList() :
 }
 
 template<class T>
+void ArrayList<T>::clear()
+{
+	delete[] pElements;//free up resources
+	pElements = new T[SIZE_INCREMENT];//allocate resources
+}
+
+template<class T>
 void ArrayList<T>::add(const T& toPush)
 {
 	if (m_size > 0 && (m_size) % SIZE_INCREMENT == 0)
@@ -18,9 +25,23 @@ void ArrayList<T>::add(const T& toPush)
 			newArray[x] = pElements[x];
 		delete[] pElements;
 		pElements = newArray;
-		//delete[] newArray;
 	}//resize the array to a decent size.
 	pElements[m_size] = toPush; m_size++;
+}
+
+template<class T>
+void ArrayList<T>::add(const T& toPush, int index)
+{
+	T * newArray = new T[m_size + 5];
+
+	for (int x = 0; x < index; ++x)
+		newArray[x] = pElements[x];
+	newArray[index] = toPush;
+	for (int x = index; x < m_size; ++x)
+		newArray[x + 1] = pElements[x];
+	delete[] pElements;
+	pElements = newArray;
+	m_size++;
 }
 
 template<class T>
@@ -46,13 +67,12 @@ void ArrayList<T>::push_front(const T& toPush)
 	if (m_size > 0 && (m_size + 1) % SIZE_INCREMENT == 0)
 	{
 		T * newArray = new T[m_size + 1 + SIZE_INCREMENT];
-		int prevSize = m_size;
+
 		for (int x = 0; x < m_size; ++x)
 			newArray[1 + x] = pElements[x];
 		delete[] pElements;
 		pElements = newArray;
 		pElements[0] = toPush;
-		//delete[] newArray;
 	}//resize the array to a decent size.
 	else
 	{
@@ -83,4 +103,14 @@ const T ArrayList<T>::remove(int index)
 	pElements = newArray;
 	m_size--;
 	return myT;
+}
+
+template<class T>
+bool ArrayList<T>::contains(const T& object)
+{
+	for (int x = 0; x < m_size; ++x)
+		if (pElements[x] == object)
+			return true;
+
+	return false;
 }

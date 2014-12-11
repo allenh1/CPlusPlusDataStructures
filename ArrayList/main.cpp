@@ -22,5 +22,9 @@ int main(int argc, char ** argv)
 	ArrayList<int> testCopy;
 	testCopy.add(-1); testCopy.add(-2);
 	testCopy.print();
+	testCopy.add(-3, 1);
+	testCopy.add(-4, 2);
+	testCopy.print();
+	
 	return 0;
 }

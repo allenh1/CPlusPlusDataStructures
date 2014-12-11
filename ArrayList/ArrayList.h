@@ -18,11 +18,14 @@ public:
 
 	void print();
 	void add(const T& toPush);
+	void add(const T& toPush, int index);
+	void clear();
 	void push_back(const T& toPush);
 	void push_front(const T& toPush);
 
 	bool isEmpty(){ return m_size == 0; }
-
+	bool contains(const T& object);
+	
 	bool operator =(const ArrayList& other)
     {
         delete []pElements;//empty out the array
@@ -36,6 +39,18 @@ public:
         m_size = x;
 
         return true;
+    }
+
+    bool operator ==(const ArrayList& other)
+    {
+    	if (other.size() != m_size)
+    		return false;
+
+    	for (int x = 0; x < size; ++x)
+    		if (other[x] != pElements[x])
+    			return false;
+
+    	return true;
     }
 
 private:
