@@ -18,6 +18,7 @@ T Stack<T>::pop()
 {
 	Node<T> * removed = pHeadNode->deleteNode();
 	T returned = removed->getData();
+	m_size--;
 	delete removed;
 	return returned;
 }

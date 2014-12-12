@@ -8,9 +8,10 @@ class ArrayList
 {
 public:
 	ArrayList();
-	~ArrayList(){ delete[] pElements; }
+	//~ArrayList(){ clear(); }
 
 	int indexOf(const T& other);
+	int lastIndexOf(const T& other);
 	const int & size(){ return m_size; }
 	const T & get(int index){ return pElements[index]; }
 	const T remove(int index);
@@ -26,19 +27,15 @@ public:
 	bool isEmpty(){ return m_size == 0; }
 	bool contains(const T& object);
 	
-	bool operator =(const ArrayList& other)
+	void operator =(ArrayList other)
     {
-        delete []pElements;//empty out the array
-
-        /** Gets operator **/
-        int x = other.size();
-        pElements = new T[x];
-        for (int y = 0; y < x; y++)
-            pElements[y] = other[y];
-
-        m_size = x;
-
-        return true;
+    	delete[] pElements;
+    	const int & otherSize = other.size();
+    	pElements = new T[otherSize];
+    	
+        for (int y = 0; y < otherSize; y++)
+            *(pElements + y) = other[y];
+        m_size = otherSize;
     }
 
     bool operator ==(const ArrayList& other)

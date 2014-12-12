@@ -11,6 +11,7 @@ template<class T>
 void ArrayList<T>::clear()
 {
 	delete[] pElements;//free up resources
+	m_size = 0;
 	pElements = new T[SIZE_INCREMENT];//allocate resources
 }
 
@@ -118,12 +119,21 @@ bool ArrayList<T>::contains(const T& object)
 template<class T>
 int ArrayList<T>::indexOf(const T& object)
 {
-	int index = -1;
 	for (int x = 0; x < m_size; ++x)
 	{
 		if (pElements[x] == object)
-			index = x;
+			return x;
 	}
 
-	return index;
+	return -1;
+}
+
+template<class T>
+int ArrayList<T>::lastIndexOf(const T& object)
+{
+	for (int x = m_size - 1; x >= 0; --x)
+		if (pElements[x] == object)
+			return x;
+
+	return -1;
 }
