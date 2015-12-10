@@ -2,57 +2,152 @@
 #define ARRAYLIST_H
 
 #include <iostream>
+#include <algorithm>
+#include <type_traits>
+#include <stdlib.h>
+#include <string.h>
 
+/**
+ * ArrayList class
+ *
+ * This class implements an ArrayList in a fashion
+ * that is similar to that of Java, but also adds
+ * a lot of useful C++ features.
+ *
+ * @author Hunter Allen <allen286@purdue.edu>
+ * @author Brian Hays <hays1@purdue.edu>
+ */
 template<class T>
 class ArrayList
 {
 public:
 	ArrayList();
-	//~ArrayList(){ clear(); }
 
 	int indexOf(const T& other);
+	int indexOf(const T& object, int occurance);
 	int lastIndexOf(const T& other);
 	const int & size(){ return m_size; }
 	const T & get(int index){ return pElements[index]; }
 	const T remove(int index);
+	void remove(const T & toRemove, bool * ok);
 	inline T & operator [](int index){ return pElements[index]; }
 
 	void print();
+
 	void add(const T& toPush);
 	void add(const T& toPush, int index);
-	void clear();
 	void push_back(const T& toPush);
 	void push_front(const T& toPush);
 
+	void clear();
+
 	bool isEmpty(){ return m_size == 0; }
 	bool contains(const T& object);
+
+	void sort();
 	
-	void operator =(ArrayList other)
-    {
-    	delete[] pElements;
-    	const int & otherSize = other.size();
-    	pElements = new T[otherSize];
-    	
-        for (int y = 0; y < otherSize; y++)
-            *(pElements + y) = other[y];
-        m_size = otherSize;
-    }
+	/**
+	 * @brief      Gets operator.
+	 * 
+	 * Deep copies the other ArrayList.
+	 * 
+	 * @param[in]  other  ArrayList to copy
+	 *
+	 * @return     return *this
+	 */
+	ArrayList<T> & operator = (const ArrayList<T> & other)
+	{
+		delete[] pElements;
+		const int & otherSize = other.size();
+		pElements = new T[otherSize];
+		
+		for (int y = 0; y < otherSize; y++)
+			*(pElements + y) = other[y];
+		m_size = otherSize;
+		return *this;
+	}
 
-    bool operator ==(const ArrayList& other)
-    {
-    	if (other.size() != m_size)
-    		return false;
+	/**
+	 * @brief      Equals operator.
+	 *
+	 * @param      other  Array with which we are checking equality.
+	 *
+	 * @return     True, if they are equal. :P
+	 */
+	bool operator == (ArrayList<T> & other)
+	{
+		if (other.size() != m_size)
+			return false;
 
-    	for (int x = 0; x < size; ++x)
-    		if (other[x] != pElements[x])
-    			return false;
+		for (int x = 0; x < m_size; ++x)
+			if (other[x] != pElements[x])
+				return false;
 
-    	return true;
-    }
+		return true;
+	}
+
+	/**
+	 * @brief      Overloads the input operator.
+	 *
+	 * The input element shall be added to the back of the array.
+	 * 
+	 * @param[in]  toAdd  Adds an element to the array.
+	 *
+	 * @return     *this
+	 */
+	ArrayList<T> & operator << (const T & toAdd) {
+		this->push_back(toAdd);
+		return *this;
+	}
+
+	/**
+	 * @brief      Overloads the input operator.
+	 * 
+	 * The list shall be appended to this one.
+	 *
+	 * @param      other  List to adjoin.
+	 *
+	 * @return     *this
+	 */
+	ArrayList<T> & operator << (ArrayList<T> & other) {
+		for (int x = 0; x < other.size(); ++x) {
+			this->push_back(other[x]);
+		} return *this;
+	}
+
+	/**
+	 * @brief      Overloads += operator.
+	 *
+	 * This adds another element to the list, just like <<.
+	 * 
+	 * @param[in]  toAdd  Adds an element to the end.
+	 *
+	 * @return     *this
+	 */
+	ArrayList<T> & operator += (const T & toAdd) {
+		this->push_back(toAdd);
+		return *this;
+	}
+
+	/**
+	 * @brief      Overloads += operator.
+	 *
+	 * Another one of 'dem add to back things.
+	 * 
+	 * @param      other  The list you are to adjoin.
+	 *
+	 * @return     *this
+	 */
+	ArrayList<T> & operator += (ArrayList<T> & other) {
+		for (int x = 0; x < other.size(); ++x)
+			this->push_back(other[x]);
+		return *this;
+	}
 
 private:
 	T * pElements;
 	int m_size;
-	const static int SIZE_INCREMENT = 10;
+	int m_capacity;
+	const static int SIZE_INCREMENT = 2;
 };
 #endif
