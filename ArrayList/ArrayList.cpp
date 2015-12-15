@@ -62,22 +62,22 @@ void ArrayList<T>::add(const T& toPush)
 template<class T>
 void ArrayList<T>::add(const T& toPush, int index)
 {
-	if (m_size && index >= m_size) return;
-	
-	if (m_size + 1 >= m_capacity) {
-		m_capacity *= SIZE_INCREMENT;
-		T * temp = new T[m_capacity];
-		std::copy(pElements, pElements + m_size, temp);
-		if (!std::is_pointer<T>::value)
-			delete[] pElements;
-		else
-			delete pElements;
-		pElements = temp;
-	}
-	T * temp = new T[m_size - index];
-	std::copy(pElements + index, pElements + m_size, temp);
-	std::copy(temp, temp + m_size - index, pElements + index + 1);
-	pElements[index] = toPush; ++m_size;
+    if (m_size && (index > m_size || index < 0)) return;
+    if (m_size == 0 && index == 0) { ++m_size; pElements[0] = toPush; return; }
+    if (m_size + 1 >= m_capacity) {
+        m_capacity *= SIZE_INCREMENT;
+        T * temp = new T[m_capacity];
+        std::copy(pElements, pElements + m_size, temp);
+        if (!std::is_pointer<T>::value)
+            delete[] pElements;
+        else
+            delete pElements;
+        pElements = temp;
+    }
+    T * temp = new T[m_size - index];
+    std::copy(pElements + index, pElements + m_size, temp);
+    std::copy(temp, temp + m_size - index, pElements + index + 1);
+    pElements[index] = toPush; ++m_size;
 }
 
 /**
